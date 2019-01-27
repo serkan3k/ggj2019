@@ -18,11 +18,14 @@ public class Furniture : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, Vector3.zero) > 30f)
+        if (GameManager.instance != null)
         {
-            Debug.Log("Goodbye cruel world! " + this.gameObject.name);
-            GameManager.instance.Furnitures.Remove(this);
-            Destroy(this.gameObject);
+            if (Vector3.Distance(transform.position, Vector3.zero) > 30f)
+            {
+                Debug.Log("Goodbye cruel world! " + this.gameObject.name);
+                GameManager.instance.Furnitures.Remove(this);
+                Destroy(this.gameObject);
+            }
         }
     }
 }

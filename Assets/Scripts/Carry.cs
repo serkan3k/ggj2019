@@ -59,6 +59,7 @@ public class Carry : MonoBehaviour
 
     private void ConnectObject(GameObject gameObject)
     {
+
         SpringJoint joint = gameObject.AddComponent<SpringJoint>();
         joint.spring = 10f;
         joint.damper = 0.02f;
@@ -76,5 +77,7 @@ public class Carry : MonoBehaviour
 
 
         childJoint = joint;
+
+        gameObject.GetComponent<Rigidbody>().isKinematic = false;
     }
 }
