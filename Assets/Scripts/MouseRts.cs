@@ -30,6 +30,7 @@ namespace DarkTrails.Combat
 		// Update is called once per frame
 		void Update()
 		{
+			if (GameManager.instance.IsGameOver) return;
 			// Init camera translation for this frame.
 			var translation = Vector3.zero;
 			/*

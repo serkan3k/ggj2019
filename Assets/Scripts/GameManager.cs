@@ -67,6 +67,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
         if (!IsGameOver)
         {
             if (IsPopulated && Furnitures.Count == 0)
@@ -75,11 +79,16 @@ public class GameManager : MonoBehaviour
             }
 
             GameTimer -= Time.deltaTime;
-            TimerText.text = GameTimer.ToString("F1") + " s. left";
+            TimerText.text = GameTimer.ToString("F1"); //+ " s. left";
             if (GameTimer <= 0f)
             {
                 GameOverLose();
             }
+            else if (GameTimer <= 10f && GameTimer > 0f)
+            {
+                var tsec = (int)((GameTimer - Mathf.Floor(GameTimer)) * 100f);
+                TimerText.color = (tsec % 100) > 60 ? Color.white : Color.red;
+            } 
         }
     }
 
@@ -87,6 +96,7 @@ public class GameManager : MonoBehaviour
     {
         IsGameOver = true;
         TimerText.gameObject.SetActive(false);
+        GameObject.Find("TimerPanel").SetActive(false);
         EndGamePanel.SetActive(true);
         EndText.text = "Time's Up! You Lose! \n Do you want to play again?";
     }
@@ -95,6 +105,7 @@ public class GameManager : MonoBehaviour
     {
         IsGameOver = true;
         TimerText.gameObject.SetActive(false);
+        GameObject.Find("TimerPanel").SetActive(false);
         EndGamePanel.SetActive(true);
         EndText.text = "Congrats! You win! \n Do you want to play again?";
     }
