@@ -20,7 +20,7 @@ public class Furniture : MonoBehaviour
     {
         if (GameManager.instance != null)
         {
-            if (Vector3.Distance(transform.position, Vector3.zero) > 30f)
+            if (Vector3.Distance(transform.position, Vector3.zero) > 40f)
             {
                 Debug.Log("Goodbye cruel world! " + this.gameObject.name);
                 GameManager.instance.Furnitures.Remove(this);

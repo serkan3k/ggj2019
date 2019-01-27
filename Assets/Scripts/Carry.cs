@@ -2,13 +2,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+        using System.Collections.Generic;
+using System.Linq;
+using Random = System.Random;
 
 public class Carry : MonoBehaviour
 {
 
     public Camera cam;
     public Joint childJoint;
+
+    public AudioSource tvsetAudio, wcAudio;
+
+    private List<AudioSource> whistlelist;
     // Use this for initialization
+    private void Awake()
+    {
+        tvsetAudio = GameObject.Find("TVAudio").GetComponent<AudioSource>();
+        wcAudio = GameObject.Find("Toilet").GetComponent<AudioSource>();
+         whistlelist = new List<AudioSource>();
+        whistlelist.Add(GameObject.Find("Whistle").GetComponent<AudioSource>());
+        
+        whistlelist.Add(GameObject.Find("Whistle2").GetComponent<AudioSource>());
+        
+        whistlelist.Add(GameObject.Find("Whistle3").GetComponent<AudioSource>());
+    }
+    
+
     void Start()
     {
 
@@ -28,7 +48,38 @@ public class Carry : MonoBehaviour
                     if (hitInfo.collider.tag == "Furniture")
                     {
                         ConnectObject(hitInfo.collider.gameObject);
-                       
+                        if (hitInfo.collider.gameObject.name.Contains("TV_Material"))
+                        {
+                            if (tvsetAudio.isPlaying == false)
+                            {
+                                tvsetAudio.Play();
+                            }
+                        }
+                        else if (hitInfo.collider.gameObject.name.Contains("WC_Material"))
+                        {
+                            if (wcAudio.isPlaying == false)
+                            {
+                                wcAudio.Play();
+                            }
+                        }
+                        else
+                        {
+                            bool isPlaying = false;
+                            for (int i = 0; i < whistlelist.Count; ++i)
+                            {
+                                if (whistlelist[i].isPlaying)
+                                {
+                                    isPlaying = true;
+                                    break;
+                                }
+                            }
+
+                            if (!isPlaying)
+                            {
+                                whistlelist[UnityEngine.Random.Range(0, whistlelist.Count - 1)].Play();
+                            }
+                        }
+
                     }
                     
                 }
